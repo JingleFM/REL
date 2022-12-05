@@ -8,6 +8,7 @@ services:
     ports:
       - "5555:5555"
     volumes:
+      - ${HOME}/.flair:${HOME}/.flair
       - ${HOME}/.rel_cache:${HOME}/.rel_cache:rw
       - ${HOME}/.cache:${HOME}/.cache:rw
       - ${PWD}/data/:/workspace/data
