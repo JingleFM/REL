@@ -9,11 +9,11 @@ from REL.utils import process_results
 API_DOC = "API_DOC"
 
 
-
 def make_handler(base_url, wiki_version, model, tagger_ner):
     """
     Class/function combination that is used to setup an API that can be used for e.g. GERBIL evaluation.
     """
+
     class GetHandler(BaseHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             self.model = model

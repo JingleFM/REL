@@ -5,7 +5,7 @@ import pickle
 class TrainingEvaluationDatasets:
     """
     Class responsible for loading training/evaluation datasets for local ED.
-    
+
     Reading dataset from CoNLL dataset, extracted by https://github.com/dalab/deep-ed/
     """
 
