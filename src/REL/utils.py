@@ -106,6 +106,55 @@ def process_results(
     return res
 
 
+def process_results_blink(
+    mentions_dataset,
+    predictions,
+    processed,
+    include_offset=False,
+):
+    """
+    Function that can be used to process the End-to-End results.
+    :return: dictionary with results and document as key.
+    """
+    res = {}
+    for doc in mentions_dataset:
+        if doc not in predictions:
+            # No mentions found, we return empty list.
+            continue
+        pred_doc = predictions[doc]
+        ment_doc = mentions_dataset[doc]
+        text = processed[doc][0]
+        res_doc = []
+
+        for pred, ment in zip(pred_doc, ment_doc):
+            sent = ment["sentence"]
+            idx = ment["sent_idx"]
+            start_pos = ment["pos"]
+            mention_length = int(ment["end_pos"] - ment["pos"])
+
+            if pred["prediction"] != "NIL":
+                candidates = [
+                    {
+                        "id": candidate.replace("_", " "),
+                        "score": float(score),
+                    }
+                    for candidate, score in zip(pred['candidates'], pred['scores'])
+                    if float(score) > 0
+                ]
+                candidates = sorted(candidates, key=lambda x: x['score'], reverse=True)
+                j = {
+                    "text": ment["ngram"],
+                    "start_pos": start_pos,
+                    "end_pos": start_pos + mention_length,
+                    "conf_ed": pred["conf_ed"],
+                    "candidates": candidates,
+                }
+                res_doc.append(j)
+
+        res[doc] = res_doc
+    return res
+
+
 def trim1(s):
     return s.replace("^%s*(.-)%s*$", "%1")
 

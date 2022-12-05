@@ -4,7 +4,7 @@ from http.server import BaseHTTPRequestHandler
 from flair.models import SequenceTagger
 
 from REL.mention_detection import MentionDetection
-from REL.utils import process_results
+from REL.utils import process_results_blink
 
 API_DOC = "API_DOC"
 
@@ -125,7 +125,7 @@ def make_handler(base_url, wiki_version, model, tagger_ner):
             predictions, timing = self.model.predict(mentions_dataset)
 
             # Process result.
-            result = process_results(
+            result = process_results_blink(
                 mentions_dataset,
                 predictions,
                 processed,
