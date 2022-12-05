@@ -24,4 +24,4 @@ RUN chmod -R 777 /workspace && chown -R root:root /workspace
 # expose the API port
 EXPOSE 5555
 
-CMD ["bash", "-c"]
+CMD python -m REL.server --bind 0.0.0.0 --port 5555 /workspace/data wiki_2019
