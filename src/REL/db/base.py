@@ -158,14 +158,14 @@ class DB:
             w,
         ).fetchall()
 
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=512)
     def lookup(self, column, table_name, word):
         return self.cursor.execute(
             f"select {column} from {table_name} where word = :word",
             {"word": word},
         ).fetchone()
 
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=512)
     def lookup_wik(self, w, table_name, column):
         """
         Args:
